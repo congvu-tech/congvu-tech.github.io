@@ -9,6 +9,7 @@ const urlAllData = `${base}&sheet=${sheetName}&tq=${queryAllData}`;
 let data = [];
 let dataAll = [];
 let dataHotNews = [];
+let dataByIdNews = [];
 let dataSearch = [];
 let dataRenderInfo = [];
 let dataSearchRender = [];
@@ -24,37 +25,98 @@ let IndexTypeService = "";
 let IndexRangePrice = "";
 window.onload = init;
 
-function init() {    
-    fetch(urlAllData)
-        .then(res => res.text())
-        .then(rep => {
-            
-            const jsData = JSON.parse(rep.substr(47).slice(0, -2));
-            
-            const colz = [];
-            jsData.table.cols.forEach((heading) => {
-                
+function init() {   
+    var queryStringID = window.location.search;
+    
 
-                if (heading.label) {
-                    colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
-                }
-            })
-            
-            jsData.table.rows.forEach((main) => {
+    if(queryStringID != ""){
+        var urlParams = new URLSearchParams(queryStringID);
+        var idNews = urlParams.get('id');
+        
+
+        fetch(urlAllData)
+            .then(res => res.text())
+            .then(rep => {
                 
-                const row = {};
-                colz.forEach((ele, ind) => {
+                const jsData = JSON.parse(rep.substr(47).slice(0, -2));
+                
+                const colz = [];
+                jsData.table.cols.forEach((heading) => {
                     
-                    row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+
+                    if (heading.label) {
+                        colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                    }
                 })
-                dataAll.push(row);
                 
+                jsData.table.rows.forEach((main) => {
+                    
+                    const row = {};
+                    colz.forEach((ele, ind) => {
+                        
+                        row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                    })
+                    dataAll.push(row);
+                    
+                })
+                data = dataAll;
+                renderHotNews();            
+                addContentPagination(currentPage);
+
+                
+                data = dataAll;
+                renderNewsByID(idNews);   
+                numberPage = 1;
+                currentPage = 1;         
+                addContentPagination(currentPage);
+                modalInfoRender(1);
             })
-            data = dataAll;
-            renderHotNews();            
-            addContentPagination(currentPage);
-        })
+    }
+    else{
+        fetch(urlAllData)
+            .then(res => res.text())
+            .then(rep => {
+                
+                const jsData = JSON.parse(rep.substr(47).slice(0, -2));
+                
+                const colz = [];
+                jsData.table.cols.forEach((heading) => {
+                    
+
+                    if (heading.label) {
+                        colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                    }
+                })
+                
+                jsData.table.rows.forEach((main) => {
+                    
+                    const row = {};
+                    colz.forEach((ele, ind) => {
+                        
+                        row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                    })
+                    dataAll.push(row);
+                    
+                })
+                data = dataAll;
+                renderHotNews();            
+                addContentPagination(currentPage);
+            })
+        }
 }
+
+function renderNewsByID(idNews){
+    dataByIdNews = [];
+    for(var count = dataAll.length - 1; count >= 0; count--){
+        if(dataAll[count]['code'] == idNews){
+            dataByIdNews.push(dataAll[count]);
+            break;
+        }
+    }
+    data = dataByIdNews;
+    renderToWebsite(dataByIdNews);
+}
+
 
 function renderHotNews(){
     dataHotNews = [];
@@ -163,6 +225,12 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[count]['subject']
+
+                                    + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                    + "</span>"
+                                    + dataRender[count]['code']
+
                                     + "<br/>"
                                     + "<span style=\"color: #555555;\">"
                                     + dataRender[count]['description']
@@ -192,6 +260,12 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[count+1]['subject']
+
+                                    + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                    + "</span>"
+                                    + dataRender[count+1]['code']
+
                                     + "<br/>"
                                     + "<span style=\"color: #555555;\">"
                                     + dataRender[count+1]['description']
@@ -226,6 +300,12 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[lengthOfDataRender]['subject']
+
+                                    + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                    + "</span>"
+                                    + dataRender[lengthOfDataRender]['code']
+
                                     + "<br/>"
                                     + "<span style=\"color: #555555;\">"
                                     + dataRender[lengthOfDataRender]['description']
