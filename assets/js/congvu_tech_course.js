@@ -9,6 +9,7 @@ const urlAllData = `${base}&sheet=${sheetName}&tq=${queryAllData}`;
 let data = [];
 let dataAll = [];
 let dataHotNews = [];
+let dataByIdNews = [];
 let dataSearch = [];
 let dataRenderInfo = [];
 let dataSearchRender = [];
@@ -24,8 +25,53 @@ let IndexTypeService = "";
 let IndexRangePrice = "";
 window.onload = init;
 
-function init() {    
-    fetch(urlAllData)
+function init() {
+    var queryStringID = window.location.search;
+    
+
+    if(queryStringID != ""){
+        var urlParams = new URLSearchParams(queryStringID);
+        var idNews = urlParams.get('id');
+        fetch(urlAllData)
+            .then(res => res.text())
+            .then(rep => {
+                
+                const jsData = JSON.parse(rep.substr(47).slice(0, -2));
+                
+                const colz = [];
+                jsData.table.cols.forEach((heading) => {
+                    
+
+                    if (heading.label) {
+                        colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                    }
+                })
+                
+                jsData.table.rows.forEach((main) => {
+                    
+                    const row = {};
+                    colz.forEach((ele, ind) => {
+                        
+                        row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                    })
+                    dataAll.push(row);
+                    
+                })
+                data = dataAll;
+                renderHotNews();            
+                addContentPagination(currentPage);
+
+                
+                data = dataAll;
+                renderNewsByID(idNews);   
+                numberPage = 1;
+                currentPage = 1;         
+                addContentPagination(currentPage);
+                modalInfoRender(1);
+            })
+    }
+    else{
+        fetch(urlAllData)
         .then(res => res.text())
         .then(rep => {
             
@@ -54,6 +100,19 @@ function init() {
             renderHotNews();            
             addContentPagination(currentPage);
         })
+    }
+}
+
+function renderNewsByID(idNews){
+    dataByIdNews = [];
+    for(var count = dataAll.length - 1; count >= 0; count--){
+        if(dataAll[count]['code'] == idNews){
+            dataByIdNews.push(dataAll[count]);
+            break;
+        }
+    }
+    data = dataByIdNews;
+    renderToWebsite(dataByIdNews);
 }
 
 function renderHotNews(){
@@ -162,7 +221,13 @@ function renderToWebsite(dataRender){
                                     + "<span style=\"color: #4864ed;\">"
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
-                                    + dataRender[count]['subject']
+                                    + dataRender[count]['subject']                                    
+
+                                    + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                    + "</span>"
+                                    + dataRender[count]['code']
+
                                     + "<br/>"
                                     + "<span style=\"color: #555555;\">"
                                     + dataRender[count]['description']
@@ -192,6 +257,12 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[count+1]['subject']
+
+                                    + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                    + "</span>"
+                                    + dataRender[count+1]['code']
+
                                     + "<br/>"
                                     + "<span style=\"color: #555555;\">"
                                     + dataRender[count+1]['description']
@@ -226,6 +297,12 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[lengthOfDataRender]['subject']
+
+                                    + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                    + "</span>"
+                                    + dataRender[lengthOfDataRender]['code']
+
                                     + "<br/>"
                                     + "<span style=\"color: #555555;\">"
                                     + dataRender[lengthOfDataRender]['description']
@@ -268,7 +345,7 @@ function renderToWebsite(dataRender){
                                     + "<div class=\"title-box\">"
                                     + "<h2 class=\"title-a\">"
                                     + "<i class=\"fa fa-star\" style=\"font-size:48px;color:rgb(248, 170, 1)\"></i>"
-                                    + " Bài Nổi Bật " + "<i class=\"fa fa-star\" style=\"font-size:48px;color:rgb(248, 170, 1)\"></i>"
+                                    + " Khóa Học Nổi Bật " + "<i class=\"fa fa-star\" style=\"font-size:48px;color:rgb(248, 170, 1)\"></i>"
                                     + "</h2></div></div>";        
         htmlContactInfo = htmlContactInfo
                                     + "<span style=\"font-size: 2rem; font-weight: bold; color: #000000\">"
