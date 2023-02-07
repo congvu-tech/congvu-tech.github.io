@@ -71,13 +71,11 @@
       <div class="row">
         <div class="col-md-6 mb-2">
           <div class="form-group mt-3">
-            <label class="pb-2" for="Type">Chủ đề</label>
+            <label class="pb-2" for="Type">Khóa học</label>
             <select class="form-control form-select form-control-a" id="Type">
               <option value="0">Tất cả</option>
-              <option value="1">Review sản phẩm</option>
-              <option value="2">Bất Động Sản</option>
-              <option value="3">Kiến thức Tin học</option>
-              <option value="4">Đời sống</option>              
+              <option value="1">Tin Học Văn Phòng</option>
+              <option value="2">Lập Trình</option>      
             </select>
           </div>
         </div>
@@ -85,8 +83,9 @@
           <div class="form-group mt-3">
             <label class="pb-2" for="city">Sắp xếp</label>
             <select class="form-control form-select form-control-a" id="city">
-              <option value="0">Mới nhất</option>
-              <option value="1">Cũ nhất</option>
+              <option value="0">Ngẫu nhiên</option>
+              <option value="1">Giá tăng dần</option>
+              <option value="1">Giá giảm dần</option>
             </select>
           </div>
         </div>
@@ -191,6 +190,7 @@
   <script>
     // Get the modal
     var modal = document.getElementById("myModal");
+    var idNews = "";
 
     // Get the button that opens the modal
     //    var btn = document.getElementById("myBtn");
@@ -210,6 +210,7 @@
       var linkImagesItem = "";
       var htmlModalInfoContent = "";
       var linkYoutube = data[indexInfo]['linkyoutube'];
+      idNews = data[indexInfo]['code'];
 
      
       
@@ -233,7 +234,20 @@
                                                   + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                                   + "</span>"
 
-                                                  + data[indexInfo]['subject']                                                  
+                                                  + data[indexInfo]['subject']     
+
+                                                  + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
+                                                  + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                                                  + "</span>"
+                                                  + data[indexInfo]['code']
+                                                  + "&nbsp; &nbsp; &nbsp;"
+
+                                                  + "<button style=\"border:none;\" onclick=\"shareNews()\">"
+                                                  + "<span style=\"color: #1877F2; font-weight: bold;\">"
+                                                  + "<i class=\"fa-solid fa-square-share-nodes\"></i>&nbsp;"                                                  
+                                                  + "Chia Sẻ"
+                                                  + "</span>"
+                                                  + "</button>"                                             
                                                   + "</p>"
                                                   
 
@@ -274,6 +288,18 @@
 
     function currentSlide(n) {
       showSlides(slideIndex = n);
+    }
+
+    //Get link share News
+    function shareNews(){
+      
+      var copyLinkShare = "https://congvu-tech.github.io/course.html?id=" + idNews;
+            
+      // Copy link to clipboard
+      navigator.clipboard.writeText(copyLinkShare);
+      
+      // Alert the copied text
+      alert("Link khóa học đã được sao chép!");
     }
 
     function showSlides(n) {
