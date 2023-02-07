@@ -191,6 +191,7 @@
   <script>
     // Get the modal
     var modal = document.getElementById("myModal");
+    var idNews = "";
 
     // Get the button that opens the modal
     //    var btn = document.getElementById("myBtn");
@@ -210,6 +211,7 @@
       var linkImagesItem = "";
       var htmlModalInfoContent = "";
       var linkYoutube = data[indexInfo]['linkyoutube'];
+      idNews = data[indexInfo]['code'];
 
      
       
@@ -239,6 +241,14 @@
                                                   + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
                                                   + "</span>"
                                                   + data[indexInfo]['code']
+                                                  + "&nbsp; &nbsp; &nbsp;"
+                                                  
+                                                  + "<button style=\"border:none;\" onclick=\"shareNews()\">"
+                                                  + "<span style=\"color: #1877F2; font-weight: bold;\">"
+                                                  + "<i class=\"fa-solid fa-square-share-nodes\"></i>&nbsp;"                                                  
+                                                  + "Chia Sẻ"
+                                                  + "</span>"
+                                                  + "</button>"
 
                                                   + "</p>"
                                                   
@@ -280,6 +290,18 @@
 
     function currentSlide(n) {
       showSlides(slideIndex = n);
+    }
+
+    //Get link share News
+    function shareNews(){
+      
+      var copyLinkShare = "https://congvu-tech.github.io/index.html?id=" + idNews;
+            
+      // Copy link to clipboard
+      navigator.clipboard.writeText(copyLinkShare);
+      
+      // Alert the copied text
+      alert("Link bài viết đã được sao chép!");
     }
 
     function showSlides(n) {
