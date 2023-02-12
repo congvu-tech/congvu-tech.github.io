@@ -350,6 +350,19 @@ function renderToWebsite(dataRender){
     }
 // Kiểm tra nếu số phần tử lẻ thì cộng thêm phần tử cuối vào danh sách
     if(dataRender.length%2 != 0){
+        var htmlNumberStar1 = "";
+        if(Number.isInteger(dataRender[count]['numberstar'])){
+            for(var idStar1=0; idStar1 < dataRender[count]['numberstar']; idStar1++){
+                htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+            }
+        }
+        else{
+            for(var idStar1=0; idStar1 < dataRender[count+1]['numberstar']-1; idStar1++){
+                htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+            }
+            htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star-half-stroke\"></i></span>";
+        }
+
         htmlListInfo = htmlListInfo + "<div class=\"row\">"
                                     + "<div class=\"col-md-6 col-sm-12 col-12\">"
                                     + "<a href=\"#info" + String(lengthOfDataRender+1) + "\" onclick=\"modalInfoRender(" + String(lengthOfDataRender+1) + ")\">"
@@ -359,8 +372,16 @@ function renderToWebsite(dataRender){
                                     + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">"
                                     + "<div class=\"card-title-c align-self-center\">"
                                     + "<h2>" + dataRender[lengthOfDataRender]['title'] + "</h2>"
-                                    + "</div>"
-                                    + "<div class=\"card-body-c\">"
+                                    + htmlNumberStar1
+                                    + "<span style=\"font-weight: normal; color: #555555;\">"
+                                    + "&nbsp;("
+                                    + dataRender[lengthOfDataRender]['numberevaluation']
+                                    + ")"
+                                    + "</span>"
+                                    + "<br/>"
+                                    + "</div>" //Close <div 6>
+
+                                    + "<div class=\"card-body-c\">" //<div 7>
                                     + "<p class=\"content-c\">"
                                     + "<span style=\"color: #4864ed;\">"
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
@@ -371,18 +392,31 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[lengthOfDataRender]['code']
+                                    + "</p>"
+                                    + "</div>"//Close <div 7>
+                                    + "</div>"//Close <div 5>
 
-                                    + "<br/>"
+                                    
+                                    + "<div style=\"padding-left: 30px;\" class=\"col-md-12 col-sm-12 col-12\">" //<div 8>
+                                    + "<div class=\"col-md-3 col-sm-3 col-3\">" //<div 9>
+                                    + "<img  style=\"float:left;\" class=\"img-header-lecturers\" src=\"" + dataRender[lengthOfDataRender]['avatarlecturers'] + "\">"
+                                    + "</div>" //Close <div 9>
+                                    + "<div class=\"col-md-9 col-sm-9 col-9\">" //<div 10>
+                                    + "<div class=\"card-body-c\">" //<div 11>
+                                    + "<p class=\"content-c-course\">"
+                                    + "<span style=\"color: #000000;\">"
+                                    + dataRender[lengthOfDataRender]['lecturers']
+                                    + "</span>"
                                     + "<span style=\"color: #555555;\">"
-                                    + dataRender[lengthOfDataRender]['description']
+                                    + "<br/>"
+                                    + dataRender[lengthOfDataRender]['infolecturers']
                                     + "</span>"
                                     + "</p>"
-                                    + "<p class=\"content-c\">"
-                                    + dataRender[lengthOfDataRender]['dateupload']
-                                    + "</p>"
-                                    + "</div>"
-                                    + "</div>"
-                                    + "</div>"
+                                    + "</div>" //Close <div 11>
+
+                                    + "</div>" //Close <div 10>
+                                    + "</div>" //Close <div 8>
+                                    + "</div>" //Close <div 3>
                                     + "</a>"
                                     + "</div>"
                                     + "</div>";
@@ -392,7 +426,7 @@ function renderToWebsite(dataRender){
         htmlTitleInfo = htmlTitleInfo + "<div class=\"col-md-12\">"
                                     + "<div class=\"title-box\">"
                                     + "<h2 class=\"title-a\">"
-                                    + "<i class=\"bi bi-search\" style=\"font-size:48px;color:#2eca6a\"></i>"
+                                    + "<i class=\"bi bi-search\" style=\"font-size:40px;color:#2eca6a\"></i>"
                                     + "<span style=\"color: #5F6368; font-weight: normal;\"> Kết Quả </span>" + "(" + String(data.length) + " Bài)"
                                     + "</h2></div></div>";
                     
@@ -413,8 +447,8 @@ function renderToWebsite(dataRender){
         htmlTitleInfo = htmlTitleInfo + "<div class=\"col-md-12\">"
                                     + "<div class=\"title-box\">"
                                     + "<h2 class=\"title-a\">"
-                                    + "<i class=\"fa fa-star\" style=\"font-size:48px;color:rgb(248, 170, 1)\"></i>"
-                                    + " Khóa Học Nổi Bật " + "<i class=\"fa fa-star\" style=\"font-size:48px;color:rgb(248, 170, 1)\"></i>"
+                                    + "<i class=\"fa fa-star\" style=\"font-size:40px;color:rgb(248, 170, 1)\"></i>"
+                                    + " Khóa Học Nổi Bật " + "<i class=\"fa fa-star\" style=\"font-size:40px;color:rgb(248, 170, 1)\"></i>"
                                     + "</h2></div></div>";        
         htmlContactInfo = htmlContactInfo
                                     + "<span style=\"font-size: 2rem; font-weight: bold; color: #000000\">"
