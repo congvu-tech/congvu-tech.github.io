@@ -205,53 +205,109 @@ function renderToWebsite(dataRender){
     lengthOfDataRender = dataRender.length - 1;
 
     for(var count = 0; count < lengthOfDataRender; count=count+2){
-        htmlListInfo = htmlListInfo + "<div class=\"row\">"
+        var htmlNumberStar1 = "";
+        var htmlNumberStar2 = "";
+        if(Number.isInteger(dataRender[count]['numberstar'])){
+            for(var idStar1=0; idStar1 < dataRender[count]['numberstar']; idStar1++){
+                htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+            }
+        }
+        else{
+            for(var idStar1=0; idStar1 < dataRender[count+1]['numberstar']-1; idStar1++){
+                htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+            }
+            htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star-half-stroke\"></i></span>";
+        }
 
-                                    + "<div class=\"col-md-6 col-sm-12 col-12\">"
+        if(Number.isInteger(dataRender[count+1]['numberstar'])){
+            for(var idStar2=0; idStar2 < dataRender[count+1]['numberstar']; idStar2++){
+                htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+            }
+        }
+        else{
+            for(var idStar2=0; idStar2 < dataRender[count+1]['numberstar']-1; idStar2++){
+                htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+            }
+            htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star-half-stroke\"></i></span>";
+        }
+        htmlListInfo = htmlListInfo + "<div class=\"row\">" //<div 1>
+
+                                    + "<div class=\"col-md-6 col-sm-12 col-12\">" //<div 2>
                                     + "<a href=\"#info" + String(count+1) + "\" onclick=\"modalInfoRender(" + String(count+1) + ")\">"
-                                    + "<div id=\"info" + String(count+1) + "\" class=\"card-box-c foo row\">"
-                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">"
-                                    + "<img class=\"img-header\" src=\"" + dataRender[count]['image1'] + "\">" + "</div>"
-                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">"
-                                    + "<div class=\"card-title-c align-self-center\">"
+                                    + "<div id=\"info" + String(count+1) + "\" class=\"card-box-c foo row\">" //<div 3>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">" //<div 4>
+                                    + "<img class=\"img-header\" src=\"" + dataRender[count]['image1'] + "\">" + "</div>" //Close <div 4>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">" //<div 5>
+                                    + "<div class=\"card-title-c align-self-center\">" //<div 6>
+                                    
                                     + "<h2>" + dataRender[count]['title'] + "</h2>"
-                                    + "</div>"
-                                    + "<div class=\"card-body-c\">"
+                                    + htmlNumberStar1
+                                    + "<span style=\"font-weight: normal; color: #555555;\">"
+                                    + "&nbsp;("
+                                    + dataRender[count]['numberevaluation']
+                                    + ")"
+                                    + "</span>"
+                                    + "<br/>"
+                                    + "</div>" //Close <div 6>
+
+                                    + "<div class=\"card-body-c\">" //<div 7>
                                     + "<p class=\"content-c\">"
                                     + "<span style=\"color: #4864ed;\">"
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
                                     + "</span>"
-                                    + dataRender[count]['subject']                                    
+                                    + dataRender[count]['subject']
 
                                     + "&nbsp;&nbsp;<span style=\"color: #d7b107;\">"
                                     + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[count]['code']
+                                    + "</p>"
+                                    + "</div>"//Close <div 7>
+                                    + "</div>"//Close <div 5>
 
-                                    + "<br/>"
+                                    
+                                    + "<div style=\"padding-left: 30px;\" class=\"col-md-12 col-sm-12 col-12\">" //<div 8>
+                                    + "<div class=\"col-md-3 col-sm-3 col-3\">" //<div 9>
+                                    + "<img  style=\"float:left;\" class=\"img-header-lecturers\" src=\"" + dataRender[count]['avatarlecturers'] + "\">"
+                                    + "</div>" //Close <div 9>
+                                    + "<div class=\"col-md-9 col-sm-9 col-9\">" //<div 10>
+                                    + "<div class=\"card-body-c\">" //<div 11>
+                                    + "<p class=\"content-c-course\">"
+                                    + "<span style=\"color: #000000;\">"
+                                    + dataRender[count]['lecturers']
+                                    + "</span>"
                                     + "<span style=\"color: #555555;\">"
-                                    + dataRender[count]['description']
+                                    + "<br/>"
+                                    + dataRender[count]['infolecturers']
                                     + "</span>"
                                     + "</p>"
-                                    + "<p class=\"content-c\">"
-                                    + dataRender[count]['dateupload']
-                                    + "</p>"
-                                    + "</div>"
-                                    + "</div>"
-                                    + "</div>"
-                                    + "</a>"
-                                    + "</div>"
+                                    + "</div>" //Close <div 11>
 
-                                    + "<div class=\"col-md-6 col-sm-12 col-12\">"
+                                    + "</div>" //Close <div 10>
+                                    + "</div>" //Close <div 8>
+                                    + "</div>" //Close <div 3>
+                                    + "</a>"
+                                    + "</div>" //Close <div 2>
+
+                                    + "<div class=\"col-md-6 col-sm-12 col-12\">" //<div 12>
                                     + "<a href=\"#info" + String(count+2) + "\" onclick=\"modalInfoRender(" + String(count+2) + ")\">"
-                                    + "<div id=\"info" + String(count+2) + "\" class=\"card-box-c foo row\">"
-                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">"
-                                    + "<img class=\"img-header\" src=\"" + dataRender[count+1]['image1'] + "\">" + "</div>"
-                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">"
-                                    + "<div class=\"card-title-c align-self-center\">"
+                                    + "<div id=\"info" + String(count+2) + "\" class=\"card-box-c foo row\">" //<div 3>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">" //<div 4>
+                                    + "<img class=\"img-header\" src=\"" + dataRender[count+1]['image1'] + "\">" + "</div>" //Close <div 4>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">" //<div 5>
+                                    + "<div class=\"card-title-c align-self-center\">" //<div 6>
+                                    
                                     + "<h2>" + dataRender[count+1]['title'] + "</h2>"
-                                    + "</div>"
-                                    + "<div class=\"card-body-c\">"
+                                    + htmlNumberStar2
+                                    + "<span style=\"font-weight: normal; color: #555555;\">"
+                                    + "&nbsp;("
+                                    + dataRender[count+1]['numberevaluation']
+                                    + ")"
+                                    + "</span>"
+                                    + "<br/>"
+                                    + "</div>" //Close <div 6>
+
+                                    + "<div class=\"card-body-c\">" //<div 7>
                                     + "<p class=\"content-c\">"
                                     + "<span style=\"color: #4864ed;\">"
                                     + "<i class=\"fa-solid fa-book\"></i>&nbsp;"
@@ -262,22 +318,35 @@ function renderToWebsite(dataRender){
                                     + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
                                     + "</span>"
                                     + dataRender[count+1]['code']
+                                    + "</p>"
+                                    + "</div>"//Close <div 7>
+                                    + "</div>"//Close <div 5>
 
-                                    + "<br/>"
+                                    
+                                    + "<div style=\"padding-left: 30px;\" class=\"col-md-12 col-sm-12 col-12\">" //<div 8>
+                                    + "<div class=\"col-md-3 col-sm-3 col-3\">" //<div 9>
+                                    + "<img  style=\"float:left;\" class=\"img-header-lecturers\" src=\"" + dataRender[count+1]['avatarlecturers'] + "\">"
+                                    + "</div>" //Close <div 9>
+                                    + "<div class=\"col-md-9 col-sm-9 col-9\">" //<div 10>
+                                    + "<div class=\"card-body-c\">" //<div 11>
+                                    + "<p class=\"content-c-course\">"
+                                    + "<span style=\"color: #000000;\">"
+                                    + dataRender[count+1]['lecturers']
+                                    + "</span>"
                                     + "<span style=\"color: #555555;\">"
-                                    + dataRender[count+1]['description']
+                                    + "<br/>"
+                                    + dataRender[count+1]['infolecturers']
                                     + "</span>"
                                     + "</p>"
-                                    + "<p class=\"content-c\">"
-                                    + dataRender[count+1]['dateupload']
-                                    + "</p>"
-                                    + "</div>"
-                                    + "</div>"
-                                    + "</div>"
-                                    + "</a>"
-                                    + "</div>"
+                                    + "</div>" //Close <div 11>
 
-                                    + "</div>";
+                                    + "</div>" //Close <div 10>
+                                    + "</div>" //Close <div 8>
+                                    + "</div>" //Close <div 3>
+                                    + "</a>"
+                                    + "</div>" //Close <div 12>
+
+                                    + "</div>" //Close <div 1>
     }
 // Kiểm tra nếu số phần tử lẻ thì cộng thêm phần tử cuối vào danh sách
     if(dataRender.length%2 != 0){
