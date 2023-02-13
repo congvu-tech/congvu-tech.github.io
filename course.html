@@ -234,17 +234,85 @@
 
                                                   + "<button style=\"border:none;\" onclick=\"shareNews()\">"
                                                   + "<span style=\"color: #1877F2; font-weight: bold;\">"
-                                                  + "<i class=\"fa-solid fa-square-share-nodes\"></i>&nbsp;"                                                  
+                                                  + "<i class=\"fa-solid fa-square-share-nodes\"></i>&nbsp;"
                                                   + "Chia Sẻ"
                                                   + "</span>"
-                                                  + "</button>"                                             
+                                                  + "</button>"
+
+                                                  + "&nbsp; &nbsp; &nbsp;"
+                                                  + "<button style=\"border:none;\" onclick=\"enrollCourse()\">"
+                                                  + "<span style=\"color: #03730a; font-weight: bold;\">"
+                                                  + "<i class=\"fa-solid fa-square-pen\"></i>&nbsp;"
+                                                  + "Ghi Danh"
+                                                  + "</span>"
+                                                  + "</button>"
+                                                  
+                                                  + "&nbsp; &nbsp; &nbsp;"
+                                                  + "<button style=\"border:none;\" onclick=\"learnCourse()\">"
+                                                  + "<span style=\"color: #FF8D1A; font-weight: bold;\">"
+                                                  + "<i class=\"fa-solid fa-circle-arrow-up\"></i>&nbsp;"
+                                                  + "Vào Học"
+                                                  + "</span>"
+                                                  + "</button>"
+
                                                   + "</p>"
                                                   
 
                                                   + "<div class=\"modal-content-info\">"
-                                                  + "<p class=\"content-description-detail\">"
-                                                  + data[indexInfo]['postcontent']
-                                                  + "</p>"                                                  
+                                                  + "<h4 class=\"title-description-detail\">"
+                                                  + "Giới Thiệu Khóa Học"
+                                                  + "</h4>"
+                                                  
+                                                  + data[indexInfo]['introofcourse']
+                                                  
+                                                  + "<h4 class=\"title-description-detail\">"
+                                                  + "Yêu Cầu Trước Khi Bắt Đầu Khóa Học"
+                                                  + "</h4>"
+                                                  + data[indexInfo]['requirementofcourse']
+                                                  
+                                                  + "<h4 class=\"title-description-detail\">"
+                                                  + "Mục Tiêu Của Khóa Học"
+                                                  + "</h4>"
+                                                  + data[indexInfo]['goalofcourse']
+                                                  
+                                                  + "</div>"
+
+                                                  + "<div class=\"modal-contact\">"
+                                                  + "<h2 class=\"title-description-detail\">"
+                                                  + "Lộ Trình Học"
+                                                  + "</h2>"
+                                                  + data[indexInfo]['routeofcourse']
+                                                  + "</div>"
+
+                                                  + "<div class=\"modal-contact\">"
+                                                  + "<h2 class=\"title-description-detail\">"
+                                                  + "Về Giảng Viên"
+                                                  + "</h2>"
+
+                                                  + "<div style=\"padding-left: 30px; display: flex;\" class=\"col-md-12 col-sm-12 col-12\">" //<div 8>
+                                                  + "<div class=\"col-md-3 col-sm-3 col-3\">" //<div 9>
+                                                  + "<img  style=\"float:right;\" class=\"img-header-lecturers\" src=\"" + data[indexInfo]['avatarlecturers'] + "\">"
+                                                  + "</div>" //Close <div 9>
+                                                  + "<div class=\"col-md-9 col-sm-9 col-9\">" //<div 10>
+                                                  + "<div>" //<div 11>
+                                                  + "<p style=\"padding-left: 1%; padding-top: 10%;\">"
+                                                  + "<span style=\"color: #C83B4C;\">"
+                                                  + data[indexInfo]['lecturers']
+                                                  + "</span>"
+                                                  + "<span style=\"color: #555555;\">"
+                                                  + "<br/>"
+                                                  + data[indexInfo]['infolecturers']
+                                                  + "</span>"
+                                                  + "</p>"
+                                                  + "</div>" //Close <div 11>
+
+                                                  + "</div>" //Close <div 10>
+                                                  + "</div>" //Close <div 8>
+
+                                                  + "<div style=\"padding-left: 0px; display: inline-block;\" class=\"col-md-12 col-sm-12 col-12\">" //<div 12>
+
+                                                  + data[indexInfo]['detaillecturers']
+                                                  + "</div>" //Close <div 12>
                                                   + "</div>"
 
                                                   + "</div>";
@@ -290,6 +358,15 @@
       
       // Alert the copied text
       alert("Link khóa học đã được sao chép!");
+    }
+
+    function enrollCourse(){
+      alert("Trang đăng ký khóa học!");
+    }
+
+    function learnCourse(){
+      var yourUsername = prompt("Tên đăng nhập: ", "");
+      var yourPIN = prompt("Mã PIN: ", "");
     }
 
     function showSlides(n) {
