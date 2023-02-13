@@ -60,11 +60,6 @@ function init() {
                     
                 })
                 data = dataAll;
-                renderHotNews();            
-                addContentPagination(currentPage);
-
-                
-                data = dataAll;
                 renderNewsByID(idNews);   
                 numberPage = 1;
                 currentPage = 1;         
