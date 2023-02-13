@@ -57,10 +57,6 @@ function init() {
                     dataAll.push(row);
                     
                 })
-                data = dataAll;
-                renderHotNews();            
-                addContentPagination(currentPage);
-
                 
                 data = dataAll;
                 renderNewsByID(idNews);   
@@ -207,28 +203,47 @@ function renderToWebsite(dataRender){
     for(var count = 0; count < lengthOfDataRender; count=count+2){
         var htmlNumberStar1 = "";
         var htmlNumberStar2 = "";
+        var countNumberStar1 = 0;
+        var countNumberStar2 = 0;
         if(Number.isInteger(dataRender[count]['numberstar'])){
             for(var idStar1=0; idStar1 < dataRender[count]['numberstar']; idStar1++){
                 htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+                countNumberStar1 = countNumberStar1 + 1;
             }
         }
         else{
             for(var idStar1=0; idStar1 < dataRender[count+1]['numberstar']-1; idStar1++){
                 htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+                countNumberStar1 = countNumberStar1 + 1;
             }
             htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star-half-stroke\"></i></span>";
+            countNumberStar1 = countNumberStar1 + 1;
+        }
+        if(countNumberStar1 < 5){
+            for(var idStar1=countNumberStar1; idStar1 < 5; idStar1++){
+                htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-regular fa-star\"></i></span>";
+            }
         }
 
         if(Number.isInteger(dataRender[count+1]['numberstar'])){
             for(var idStar2=0; idStar2 < dataRender[count+1]['numberstar']; idStar2++){
                 htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+                countNumberStar2 = countNumberStar2 + 1;
             }
         }
         else{
             for(var idStar2=0; idStar2 < dataRender[count+1]['numberstar']-1; idStar2++){
                 htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+                countNumberStar2 = countNumberStar2 + 1;
             }
             htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star-half-stroke\"></i></span>";
+            countNumberStar2 = countNumberStar2 + 1;
+        }
+        
+        if(countNumberStar2 < 5){
+            for(var idStar2=countNumberStar2; idStar2 < 5; idStar2++){
+                htmlNumberStar2 = htmlNumberStar2 + "<span style=\"color: orange;\"><i class=\"fa-regular fa-star\"></i></span>";
+            }
         }
         htmlListInfo = htmlListInfo + "<div class=\"row\">" //<div 1>
 
@@ -351,16 +366,26 @@ function renderToWebsite(dataRender){
 // Kiểm tra nếu số phần tử lẻ thì cộng thêm phần tử cuối vào danh sách
     if(dataRender.length%2 != 0){
         var htmlNumberStar1 = "";
-        if(Number.isInteger(dataRender[count]['numberstar'])){
-            for(var idStar1=0; idStar1 < dataRender[count]['numberstar']; idStar1++){
+        var countNumberStar1 = 0;
+        if(Number.isInteger(dataRender[lengthOfDataRender]['numberstar'])){
+            for(var idStar1=0; idStar1 < dataRender[lengthOfDataRender]['numberstar']; idStar1++){
                 htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+                countNumberStar1 = countNumberStar1 + 1;
             }
         }
         else{
-            for(var idStar1=0; idStar1 < dataRender[count+1]['numberstar']-1; idStar1++){
+            for(var idStar1=0; idStar1 < dataRender[lengthOfDataRender]['numberstar']-1; idStar1++){
                 htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star\"></i></span>";
+                countNumberStar1 = countNumberStar1 + 1;
             }
             htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-solid fa-star-half-stroke\"></i></span>";
+            countNumberStar1 = countNumberStar1 + 1;
+        }
+
+        if(countNumberStar1 < 5){
+            for(var idStar1=countNumberStar1; idStar1 < 5; idStar1++){
+                htmlNumberStar1 = htmlNumberStar1 + "<span style=\"color: orange;\"><i class=\"fa-regular fa-star\"></i></span>";
+            }
         }
 
         htmlListInfo = htmlListInfo + "<div class=\"row\">"
