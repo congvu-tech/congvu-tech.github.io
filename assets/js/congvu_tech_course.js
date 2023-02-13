@@ -142,23 +142,29 @@ function showResultOfSearch(){
     checkStatusSearch = true;
     dataSearch = [];
     
-    if(IndexSort == "0"){        
-        for(var count = dataAll.length - 1; count >= 0; count--){
-            if(IndexSubject == "0"){
-                dataSearch.push(dataAll[count]);
-            }
-            else if(dataAll[count]['indexsubject'] == IndexSubject){
-                dataSearch.push(dataAll[count]);
-            }
-        }        
-    }
-    else{
+    if(IndexSort == "0"){       
         if(IndexSubject == "0"){
             dataSearch = dataAll;
         }
-        else{
-            for(var count = 0; count < dataAll.length; count++){
+        else{            
+            for(var count = dataAll.length - 1; count >= 0; count--){                
                 if(dataAll[count]['indexsubject'] == IndexSubject){
+                    dataSearch.push(dataAll[count]);
+                }
+            }   
+        }      
+    }
+    else{
+        if(IndexSubject == "0"){
+            for(var count = dataAll.length - 1; count >= 0; count--){                
+                if(dataAll[count]['indexfee'] == IndexSort){
+                    dataSearch.push(dataAll[count]);
+                }
+            }
+        }
+        else{
+            for(var count = dataAll.length - 1; count >= 0; count--){
+                if(dataAll[count]['indexsubject'] == IndexSubject && dataAll[count]['indexfee'] == IndexSort){
                     dataSearch.push(dataAll[count]);
                 }
             }
@@ -190,6 +196,10 @@ function showResultOfSearch(){
         dataSearchRender.push(dataSearch[4]);
         dataSearchRender.push(dataSearch[5]);
         renderToWebsite(dataSearchRender);
+        addContentPagination(currentPage);
+    }
+    else{
+        renderToWebsite(dataSearch);
         addContentPagination(currentPage);
     }
 }
@@ -262,6 +272,10 @@ function renderToWebsite(dataRender){
                                     + dataRender[count]['numberevaluation']
                                     + ")"
                                     + "</span>"
+                                    + "&nbsp&nbsp Giá: "
+                                    + "<span style=\"font-weight: bold; color: #2717F1;\">"
+                                    + dataRender[count]['feeofcourse']
+                                    + "</span>"
                                     + "<br/>"
                                     + "</div>" //Close <div 6>
 
@@ -318,6 +332,10 @@ function renderToWebsite(dataRender){
                                     + "&nbsp;("
                                     + dataRender[count+1]['numberevaluation']
                                     + ")"
+                                    + "</span>"
+                                    + "&nbsp&nbsp Giá: "
+                                    + "<span style=\"font-weight: bold; color: #2717F1;\">"
+                                    + dataRender[count+1]['feeofcourse']
                                     + "</span>"
                                     + "<br/>"
                                     + "</div>" //Close <div 6>
@@ -402,6 +420,10 @@ function renderToWebsite(dataRender){
                                     + "&nbsp;("
                                     + dataRender[lengthOfDataRender]['numberevaluation']
                                     + ")"
+                                    + "</span>"
+                                    + "&nbsp&nbsp Giá: "
+                                    + "<span style=\"font-weight: bold; color: #2717F1;\">"
+                                    + dataRender[lengthOfDataRender]['feeofcourse']
                                     + "</span>"
                                     + "<br/>"
                                     + "</div>" //Close <div 6>
