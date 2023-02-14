@@ -66,7 +66,7 @@
   </nav><!-- End Header/Navbar -->
 <!-- </div> -->
   <!-- Form tìm kiếm -->
-  <div class="form-search">
+  <div id="form-search-CongvuTech" class="form-search">
     <!-- <form class="form-a"> -->
       <div class="row">
         <div class="col-md-6 mb-2">
@@ -83,7 +83,7 @@
           <div class="form-group mt-3">
             <label class="pb-2" for="city">Sắp xếp</label>
             <select class="form-control form-select form-control-a" id="city">
-              <option value="0">Ngẫu nhiên</option>
+              <option value="0">Tất cả</option>
               <option value="1">Miễn phí</option>
               <option value="2">Có phí</option>
             </select>
@@ -248,7 +248,9 @@
                                                   + "</button>"
                                                   
                                                   + "&nbsp; &nbsp; &nbsp;"
-                                                  + "<button style=\"border:none;\" onclick=\"learnCourse()\">"
+                                                  + "<button style=\"border:none;\" onclick=\"learnCourse("
+                                                  + indexInfo
+                                                  + ")\">"
                                                   + "<span style=\"color: #FF8D1A; font-weight: bold;\">"
                                                   + "<i class=\"fa-solid fa-circle-arrow-up\"></i>&nbsp;"
                                                   + "Vào Học"
@@ -364,9 +366,12 @@
       alert("Trang đăng ký khóa học!");
     }
 
-    function learnCourse(){
+    function learnCourse(indexCourse){
       var yourUsername = prompt("Tên đăng nhập: ", "");
-      var yourPIN = prompt("Mã PIN: ", "");
+      var yourPassword = prompt("Mật khẩu: ", "");
+      checkAccount(data[indexCourse]['code'], yourUsername, yourPassword, data[indexCourse]['title']);
+      
+      //renderCourseByID(yourPIN);
     }
 
     function showSlides(n) {
