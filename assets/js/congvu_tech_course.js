@@ -23,48 +23,54 @@ let IndexTypeRealEstate = "";
 let IndexPlace = "";
 let IndexTypeService = "";
 let IndexRangePrice = "";
+
 window.onload = init;
 
 function init() {
     var queryStringID = window.location.search;
     
-
     if(queryStringID != ""){
         var urlParams = new URLSearchParams(queryStringID);
         var idNews = urlParams.get('id');
-        fetch(urlAllData)
-            .then(res => res.text())
-            .then(rep => {
-                
-                const jsData = JSON.parse(rep.substr(47).slice(0, -2));
-                
-                const colz = [];
-                jsData.table.cols.forEach((heading) => {
+        var userCurrent = urlParams.get('user');
+        if(userCurrent == null){
+            fetch(urlAllData)
+                .then(res => res.text())
+                .then(rep => {
                     
-
-                    if (heading.label) {
-                        colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
-                    }
-                })
-                
-                jsData.table.rows.forEach((main) => {
+                    const jsData = JSON.parse(rep.substr(47).slice(0, -2));
                     
-                    const row = {};
-                    colz.forEach((ele, ind) => {
+                    const colz = [];
+                    jsData.table.cols.forEach((heading) => {
                         
-                        row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+
+                        if (heading.label) {
+                            colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                        }
                     })
-                    dataAll.push(row);
                     
+                    jsData.table.rows.forEach((main) => {
+                        
+                        const row = {};
+                        colz.forEach((ele, ind) => {
+                            
+                            row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                        })
+                        dataAll.push(row);
+                        
+                    })
+                    
+                    data = dataAll;
+                    renderNewsByID(idNews);   
+                    numberPage = 1;
+                    currentPage = 1;         
+                    addContentPagination(currentPage);
+                    modalInfoRender(1);
                 })
-                
-                data = dataAll;
-                renderNewsByID(idNews);   
-                numberPage = 1;
-                currentPage = 1;         
-                addContentPagination(currentPage);
-                modalInfoRender(1);
-            })
+        }
+        else{
+            checkCookie(userCurrent, idNews);
+        }
     }
     else{
         fetch(urlAllData)
@@ -589,8 +595,309 @@ function gotoPage(page){
       }
       renderToWebsite(dataRenderInfo);
       addContentPagination(currentPage);
+    }  
+
+}
+
+//Function Read and Render data of Course
+
+function renderCourseByID(idCourse){
+    document.getElementById("form-search-CongvuTech").style.display = "none";
+    var urlCourseByID = `${base}&sheet=${idCourse}&tq=${queryAllData}`;
+    dataAll = [];
+    fetch(urlCourseByID)
+        .then(res => res.text())
+        .then(rep => {
+            
+            const jsData = JSON.parse(rep.substr(47).slice(0, -2));
+            
+            const colz = [];
+            jsData.table.cols.forEach((heading) => {
+                
+
+                if (heading.label) {
+                    colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                }
+            })
+            
+            jsData.table.rows.forEach((main) => {
+                
+                const row = {};
+                colz.forEach((ele, ind) => {
+                    
+                    row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                })
+                dataAll.push(row);
+                
+            })            
+            data = dataAll;
+            console.log(data);
+            renderListLesson(data);
+        })
+
+}
+
+// Function render list Lesson of Course when user Sign In
+function renderListLesson(dataRender){
+    var htmlListLesson = "";
+    var htmlTitleCourse = "";
+    var htmlFooter = ""
+
+    var htmlComplete = "&nbsp;&nbsp;&nbsp;"
+                       + "<span style=\"color: #04AA6D;\">"
+                       + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                       + "</span>"
+                       + "<span style=\"font-weight: bold; color: #04AA6D\">Hoàn Thành"
+                       + "</span>";
+    
+    var htmlIncomplete = "&nbsp;&nbsp;&nbsp;"
+                        + "<span style=\"color: #DEDFE1;\">"
+                        + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+                        + "</span>"
+                        + "<span style=\"font-weight: bold; color: #DEDFE1\">Chưa Hoàn Thành"
+                        + "</span>";
+    var achievementsOfUser = Number(getCookie("achievements_of_user")) - 1;
+    var htmlStatusLesson1 = "";
+    var htmlStatusLesson2 = "";
+
+    lengthOfDataRender = dataRender.length - 1;
+
+
+
+    for(var count = 0; count < lengthOfDataRender; count=count+2){
+        if(count < achievementsOfUser){
+            htmlStatusLesson1 = htmlComplete;
+            htmlStatusLesson2 = htmlComplete;
+        }
+        else if(count == achievementsOfUser){
+            htmlStatusLesson1 = htmlComplete;
+            htmlStatusLesson2 = htmlIncomplete;
+        }
+        else{
+            htmlStatusLesson1 = htmlIncomplete;
+            htmlStatusLesson2 = htmlIncomplete;
+        }
+        htmlListLesson = htmlListLesson + "<div class=\"row\">" //<div 1>
+
+                                    + "<div class=\"col-md-6 col-sm-12 col-12\">" //<div 2>
+                                    + "<a href=\"#info" + String(count+1) + "\" onclick=\"modalInfoRender(" + String(count+1) + ")\">"
+                                    + "<div id=\"info" + String(count+1) + "\" class=\"card-box-c foo row\">" //<div 3>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">" //<div 4>
+                                    + "<img class=\"img-header\" src=\"" + dataRender[count]['image1'] + "\">" + "</div>" //Close <div 4>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">" //<div 5>
+                                    + "<div class=\"card-title-c align-self-center\">" //<div 6>
+                                    
+                                    + "<h2>" + dataRender[count]['lesson'] + "</h2>"
+                                    
+                                    + "</div>" //Close <div 6>
+
+                                    + "<div class=\"card-body-c\">" //<div 7>
+                                    + "<p class=\"content-c\">"
+                                    
+                                    + htmlStatusLesson1
+
+                                    + "</p>"
+                                    + "</div>"//Close <div 7>
+                                    + "</div>"//Close <div 5>
+                                    
+                                    + "</div>" //Close <div 3>
+                                    + "</a>"
+                                    + "</div>" //Close <div 2>
+
+                                    + "<div class=\"col-md-6 col-sm-12 col-12\">" //<div 12>
+                                    + "<a href=\"#info" + String(count+2) + "\" onclick=\"modalInfoRender(" + String(count+2) + ")\">"
+                                    + "<div id=\"info" + String(count+2) + "\" class=\"card-box-c foo row\">" //<div 3>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">" //<div 4>
+                                    + "<img class=\"img-header\" src=\"" + dataRender[count+1]['image1'] + "\">" + "</div>" //Close <div 4>
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">" //<div 5>
+                                    + "<div class=\"card-title-c align-self-center\">" //<div 6>
+                                    
+                                    + "<h2>" + dataRender[count+1]['lesson'] + "</h2>"
+                                    
+                                    + "</div>" //Close <div 6>
+
+                                    + "<div class=\"card-body-c\">" //<div 7>
+                                    + "<p class=\"content-c\">"
+
+                                    + htmlStatusLesson2
+
+                                    + "</p>"
+                                    + "</div>"//Close <div 7>
+                                    + "</div>"//Close <div 5>
+
+                                    + "</div>" //Close <div 3>
+                                    + "</a>"
+                                    + "</div>" //Close <div 12>
+
+                                    + "</div>" //Close <div 1>
     }
     
+// Kiểm tra nếu số phần tử lẻ thì cộng thêm phần tử cuối vào danh sách
+    if(dataRender.length%2 != 0){
+        if(achievementsOfUser < lengthOfDataRender){
+            htmlStatusLesson1 = htmlIncomplete;
+        }
+        else{
+            htmlStatusLesson1 = htmlComplete;
+        }
+        htmlListLesson = htmlListLesson + "<div class=\"row\">"
+                                    + "<div class=\"col-md-6 col-sm-12 col-12\">"
+                                    + "<a href=\"#info" + String(lengthOfDataRender+1) + "\" onclick=\"modalInfoRender(" + String(lengthOfDataRender+1) + ")\">"
+                                    + "<div id=\"info" + String(lengthOfDataRender+1) + "\" class=\"card-box-c foo row\">"
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-header-c\">"
+                                    + "<img class=\"img-header\" src=\"" + dataRender[lengthOfDataRender]['image1'] + "\">" + "</div>"
+                                    + "<div class=\"col-md-12 col-sm-12 col-12 card-info-c\">"
+                                    + "<div class=\"card-title-c align-self-center\">"
+                                    + "<h2>" + dataRender[lengthOfDataRender]['lesson'] + "</h2>"
+                                    
+                                    + "</div>" //Close <div 6>
 
-  }
+                                    + "<div class=\"card-body-c\">" //<div 7>
+                                    + "<p class=\"content-c\">"
 
+                                    + htmlStatusLesson1
+
+                                    
+                                    + "</p>"
+                                    + "</div>"//Close <div 7>
+                                    + "</div>"//Close <div 5>
+
+                                    + "</div>" //Close <div 3>
+                                    + "</a>"
+                                    + "</div>"
+                                    + "</div>";
+    
+    }
+    
+    htmlTitleCourse = htmlTitleCourse + "<div style=\"padding-top: 100px;\" class=\"col-md-12\">"
+                                + "<div class=\"title-box\">"
+                                + "<h2 class=\"title-a\">"
+                                + "<i class=\"fa fa-star\" style=\"font-size:40px;color:rgb(248, 170, 1)\"></i>"
+                                + " Khóa Học "
+                                + "<i class=\"fa fa-star\" style=\"font-size:40px;color:rgb(248, 170, 1)\"></i>"
+                                + "<br/>"
+                                + "<span style=\"color: #682321\">"
+                                + getCookie("title_course")
+                                + "</span>"
+                                + "</h2></div></div>";
+    
+                                htmlFooter = htmlFooter
+                                + "<span style=\"font-size: 2rem; font-weight: bold; color: #000000\">"
+                                + "CongVu"
+                                + "</span>&nbsp;"
+                                + "<span style=\"font-size: 2rem; font-weight: bold; color: #2717F1\">"
+                                + "Tech"
+                                + "</span>";
+    
+    document.getElementById("rowRenderTitle").innerHTML = htmlTitleCourse;
+    document.getElementById("rowRenderInfo").innerHTML = htmlListLesson;
+    document.getElementById("contractInfo").innerHTML = htmlFooter;
+        
+    
+}
+
+// Function check status Account when Sign In to Learn Course
+function checkAccount(idCourse, yourUsername, yourPassword, titleOfCourse){
+    var sheetNameStudent = 'InfoStudent';
+    var qu_CheckStudent = 'Select E, F WHERE A != "" AND B = "' + yourUsername + '" AND C = "' + yourPassword + '" AND D = "' + idCourse + '"';
+    
+    var queryCheckStudent = encodeURIComponent(qu_CheckStudent);
+    var urlCheckStudent = `${base}&sheet=${sheetNameStudent}&tq=${queryCheckStudent}`;
+
+    var dataCheckStudent = [];
+    fetch(urlCheckStudent)
+        .then(res => res.text())
+        .then(rep => {
+            
+            const jsData = JSON.parse(rep.substr(47).slice(0, -2));
+            
+            const colz = [];
+            jsData.table.cols.forEach((heading) => {
+                
+
+                if (heading.label) {
+                    colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                }
+            })
+            
+            jsData.table.rows.forEach((main) => {
+                
+                const row = {};
+                colz.forEach((ele, ind) => {
+                    
+                    row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                })
+                dataCheckStudent.push(row);
+                
+            })
+            
+            if(dataCheckStudent.length == 0){
+                alert("Bạn nhập tài khoản hoặc mật khẩu không đúng!");
+            }
+            else if(dataCheckStudent[0]['status'] == "expired"){
+                alert("Tài khoản của bạn đã hết hạn!");
+            }
+            else if(dataCheckStudent[0]['status'] == "active"){
+                setCookie("username", yourUsername, 8, "title_course", titleOfCourse, "achievements_of_user", dataCheckStudent[0]['achievements']);
+                runToCourse(idCourse, yourUsername);
+                //Chỗ này khi chuyển trang sang khóa học của User thì load lại biến nên lưu cũng như không!!!
+                //achievementsOfUser = dataCheckStudent[0]['achievements'];
+                //nameOfCourseCurrent = titleOfCourse;
+            }
+        })
+}
+
+// Function Set Cookie for Username actived
+function setCookie(cname,cvalue,exhours,courseName,courseValue,achievementsOfUserName,achievementsOfUserValue) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exhours*60*60*1000));
+    let expires = "expires=" + d.toUTCString();
+
+    //document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    document.cookie = courseName + "=" + courseValue + ";" + expires + ";path=/";
+    document.cookie = achievementsOfUserName + "=" + achievementsOfUserValue + ";" + expires + ";path=/";
+    
+}
+
+// Function Get Cookie Username
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
+
+// Function Check Cookie Username
+function checkCookie(userCurrent, idCourse) {
+    let user = getCookie("username");
+    if (user != "" && user == userCurrent) {
+        alert("Chúc bạn học tập hiệu quả!");
+        renderCourseByID(idCourse);
+    } else {
+        alert("Bạn cần đăng nhập lại để tiếp tục học!");
+    }
+}
+
+// Run to Course for user learn
+function runToCourse(idCourse, yourUsername){
+      
+    //var linkRunToCourse = "https://congvu-tech.github.io/course.html?id=" + idCourse + "&user=" + yourUsername;
+    var linkRunToCourse = "http://localhost/congvu-tech.github.io-main/course.html?id=" + idCourse + "&user=" + yourUsername;
+    
+    window.location.href = linkRunToCourse;    
+    // Copy link to clipboard
+    //navigator.clipboard.writeText(linkRunToCourse);
+    
+    // Alert the copied text
+    //alert("Link khóa học đã được sao chép!");
+}
