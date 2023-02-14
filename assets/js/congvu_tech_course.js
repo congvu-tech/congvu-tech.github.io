@@ -891,13 +891,8 @@ function checkCookie(userCurrent, idCourse) {
 // Run to Course for user learn
 function runToCourse(idCourse, yourUsername){
       
-    //var linkRunToCourse = "https://congvu-tech.github.io/course.html?id=" + idCourse + "&user=" + yourUsername;
-    var linkRunToCourse = "http://localhost/congvu-tech.github.io-main/course.html?id=" + idCourse + "&user=" + yourUsername;
+    var linkRunToCourse = "https://congvu-tech.github.io/course.html?id=" + idCourse + "&user=" + yourUsername;
+    //var linkRunToCourse = "http://localhost/congvu-tech.github.io-main/course.html?id=" + idCourse + "&user=" + yourUsername;
     
-    window.location.href = linkRunToCourse;    
-    // Copy link to clipboard
-    //navigator.clipboard.writeText(linkRunToCourse);
-    
-    // Alert the copied text
-    //alert("Link khóa học đã được sao chép!");
+    window.location.href = linkRunToCourse;
 }
