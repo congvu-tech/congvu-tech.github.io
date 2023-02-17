@@ -643,19 +643,22 @@ function renderListLesson(dataRender){
     var htmlTitleCourse = "";
     var htmlFooter = ""
 
-    var htmlComplete = "&nbsp;&nbsp;&nbsp;"
-                       + "<span style=\"color: #04AA6D;\">"
-                       + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
-                       + "</span>"
-                       + "<span style=\"font-weight: bold; color: #04AA6D\">Hoàn Thành"
-                       + "</span>";
+    // var htmlComplete = "&nbsp;&nbsp;&nbsp;"
+    //                    + "<span style=\"color: #04AA6D;\">"
+    //                    + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+    //                    + "</span>"
+    //                    + "<span style=\"font-weight: bold; color: #04AA6D\">Hoàn Thành"
+    //                    + "</span>";
+    var htmlComplete = "";
+    var htmlIncomplete = "";
     
-    var htmlIncomplete = "&nbsp;&nbsp;&nbsp;"
-                        + "<span style=\"color: #DEDFE1;\">"
-                        + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
-                        + "</span>"
-                        + "<span style=\"font-weight: bold; color: #DEDFE1\">Chưa Hoàn Thành"
-                        + "</span>";
+    // var htmlIncomplete = "&nbsp;&nbsp;&nbsp;"
+    //                     + "<span style=\"color: #DEDFE1;\">"
+    //                     + "<i class=\"fa-solid fa-medal\"></i>&nbsp;"
+    //                     + "</span>"
+    //                     + "<span style=\"font-weight: bold; color: #DEDFE1\">Chưa Hoàn Thành"
+    //                     + "</span>";
+    
     var achievementsOfUser = Number(getCookie("achievements_of_user")) - 1;
     var htmlStatusLesson1 = "";
     var htmlStatusLesson2 = "";
