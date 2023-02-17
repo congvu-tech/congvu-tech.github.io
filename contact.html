@@ -65,7 +65,26 @@
     </div>
   </nav><!-- End Header/Navbar -->
 
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-main-content">
+        
 
+        <div class="modal-container">
+          <div id="myModalVlog"></div>
+          
+          <div id="myModalContent"></div>
+        </div>
+
+        
+      </div>
+    </div>
+
+    
+  </div>
 
   <main id="main" class="main-contactCongVu">
   </main><!-- End #main -->
@@ -81,20 +100,147 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/congvu_tech_contact.js"></script>
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    function modalInfoRender(){
+      var htmlModalInfoContent = "";     
+      
+      
+      // htmlModalInfoContent = htmlModalInfoContent + "<div class=\"mySlides\">"
+      //                                             + "<iframe width=\"100%\" height=\"100%\" src=\""
+      //                                             + linkYoutube
+      //                                             + "\" title=\"Video Youtube - CongVu Tech\""
+      //                                             + "frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen>"
+      //                                             + "</iframe>"
+      //                                             + "</div>";
+     
+
+      htmlModalInfoContent = htmlModalInfoContent + "<div class=\"modal-content-header\">"
+
+                                                  + "<h2>" + "Thành tích và kinh nghiệm của mình" + "</h2>"
+                                                                                                 
+
+                                                  + "<div class=\"modal-content-info\">"
+
+                                                  + "<p class=\"content-description-detail\">"
+                                                  + "<ul>"
+                                                    + "<li>"
+                                                    + "<a target=\"_blank\" href=\"https://www.credly.com/badges/7f6fa73c-3ae8-4157-8e33-df784b9a26a1\">"
+                                                    + "<span style=\"color: #0000EE;\">"
+                                                    + "Chứng chỉ MOS Expert 2019"
+                                                    + "</span>"
+                                                    + "</a>"
+                                                    + "</li>"
+
+                                                    + "<li>"
+                                                    + "<a target=\"_blank\" href=\"https://www.credly.com/badges/23229ffa-5984-4a9f-afee-702439df51ed\">"
+                                                    + "<span style=\"color: #0000EE;\">"
+                                                    + "Chứng chỉ IC3"
+                                                    + "</span>"
+                                                    + "</a>"
+                                                    + " gồm 3 chứng chỉ thành phần:"
+                                                      + "<ol>"
+
+                                                      + "<li>"
+                                                      + "<a target=\"_blank\" href=\"https://www.credly.com/badges/8e6fc215-b71f-48ef-86fb-945398f4e205\">"
+                                                      + "<span style=\"color: #0000EE;\">"
+                                                      + "Chứng chỉ CF (Computing Fundamentals)"
+                                                      + "</span>"
+                                                      + "</a>"
+                                                      + " - Chứng nhận kiến thức về \"Máy Tính Căn Bản\"."
+                                                      + "</li>"
+
+                                                      + "<li>"
+                                                      + "<a target=\"_blank\" href=\"https://www.credly.com/badges/3a3bcd47-436f-4046-b22c-f77016c22567\">"
+                                                      + "<span style=\"color: #0000EE;\">"
+                                                      + "Chứng chỉ KA (Key Applications)"
+                                                      + "</span>"
+                                                      + "</a>"
+                                                      + " - Chứng nhận kiến thức về \"Các Ứng Dụng Chủ Chốt\"."
+                                                      + "</li>"
+
+                                                      + "<li>"
+                                                      + "<a target=\"_blank\" href=\"https://www.credly.com/badges/828d17f1-788d-4d94-b05d-469f7ea78ebe\">"
+                                                      + "<span style=\"color: #0000EE;\">"
+                                                      + "Chứng chỉ LO (Living Online)"
+                                                      + "</span>"
+                                                      + "</a>"
+                                                      + " - Chứng nhận kiến thức về \"Cuộc Sống Trực Tuyến\".</a>"
+                                                      + "</li>"
+
+                                                      + "</ol>"
+                                                    + "</li>"
+
+                                                    + "<li>"                                                    
+                                                    + "Tốt nghiệp "
+                                                    + "<span style=\"font-weight: bold;\">"
+                                                    + "Loại Giỏi"
+                                                    + "</span>"
+                                                    + " ngành Sư Phạm Tin Học - ĐH Sư Phạm Tp.HCM."                                                    
+                                                    + "</li>"
+
+                                                    + "<li>"                                                    
+                                                    + "5 năm kinh nghiệm trong giảng dạy "
+                                                    + "<span style=\"font-weight: bold;\">"
+                                                    + "Tin Học Văn Phòng"
+                                                    + "</span>"
+                                                    + " và "
+                                                    + "<span style=\"font-weight: bold;\">"
+                                                    + "STEM"
+                                                    + "</span>"
+                                                    + "."
+                                                    + "</li>"
+                                                  + "</ul>"
+                                                  + "</p>"                                                  
+                                                  + "</div>"
+
+                                                  + "</div>";
+      
+        
+      document.getElementById("myModalContent").innerHTML = htmlModalInfoContent;
+      modal.style.display = "block";
+      document.getElementById("navbarBDS").style.display = "none";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+      modal.style.display = "none";
+      document.getElementById("navbarBDS").style.display = "block";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
 
 </body>
 <script>
-  let prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {     
-      let currentScrollPos = window.pageYOffset;
-    
-      if (prevScrollpos < currentScrollPos && currentScrollPos > 100) {
-        document.getElementById("navbarBDS").style.display = "none";
-        prevScrollpos = currentScrollPos;
-      } else if(prevScrollpos > currentScrollPos + 100){
-        document.getElementById("navbarBDS").style.display = "block";
-        prevScrollpos = currentScrollPos;
-      }      
+    let prevScrollpos = window.pageYOffset;
+    window.onscroll = function() {      
+      if(modal.style.display === "block"){
+        document.getElementById("navbarBDS").style.display = "none";        
+      }
+      else{
+        let currentScrollPos = window.pageYOffset;
+      
+        if (prevScrollpos < currentScrollPos && currentScrollPos > 100) {
+          document.getElementById("navbarBDS").style.display = "none";
+          prevScrollpos = currentScrollPos;
+        } else if(prevScrollpos > currentScrollPos + 100){
+          document.getElementById("navbarBDS").style.display = "block";
+          prevScrollpos = currentScrollPos;
+        }
+        
+
+      }
+      
     };
 </script>
 </html>
