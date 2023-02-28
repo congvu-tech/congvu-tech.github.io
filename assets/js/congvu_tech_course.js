@@ -278,7 +278,7 @@ function renderToWebsite(dataRender){
                                     + dataRender[count]['numberevaluation']
                                     + ")"
                                     + "</span>"
-                                    + "&nbsp&nbsp Giá: "
+                                    + "&nbsp&nbsp"
                                     + "<span style=\"font-weight: bold; color: #2717F1;\">"
                                     + dataRender[count]['feeofcourse']
                                     + "</span>"
@@ -339,7 +339,7 @@ function renderToWebsite(dataRender){
                                     + dataRender[count+1]['numberevaluation']
                                     + ")"
                                     + "</span>"
-                                    + "&nbsp&nbsp Giá: "
+                                    + "&nbsp&nbsp"
                                     + "<span style=\"font-weight: bold; color: #2717F1;\">"
                                     + dataRender[count+1]['feeofcourse']
                                     + "</span>"
@@ -427,7 +427,7 @@ function renderToWebsite(dataRender){
                                     + dataRender[lengthOfDataRender]['numberevaluation']
                                     + ")"
                                     + "</span>"
-                                    + "&nbsp&nbsp Giá: "
+                                    + "&nbsp&nbsp"
                                     + "<span style=\"font-weight: bold; color: #2717F1;\">"
                                     + dataRender[lengthOfDataRender]['feeofcourse']
                                     + "</span>"
